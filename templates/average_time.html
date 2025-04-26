@@ -1,0 +1,84 @@
+<style>
+/* General section styling */
+#q7 {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* Form group styling */
+.form-group {
+    display: flex; /* Align label and input side by side */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+#q7 label {
+    width: 200px; /* Fixed width for labels */
+    font-weight: bold;
+    color: #555;
+    text-align: right; /* Align text to the right for better spacing */
+    margin-right: 10px; /* Space between label and input */
+}
+
+/* Input fields styling */
+#q7 input[type="text"] {
+    width: 400px; /* Adjusted input width */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Center the button */
+.query-button {
+        width: 400px;
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #3b3fc6;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .query-button:hover {
+        background-color: #3b3fc6;
+    }
+</style>
+
+<h2>Average Flight Time Between Two Countries</h2><br>
+<form method="POST" action="/average_time">
+<div class="form-group">
+    <input type="text" id="country1" name="country1" placeholder="Enter The Departure Country Name" required>
+</div>
+<div class="form-group">
+    <input type="text" id="country2" name="country2" placeholder="Enter The Destination Country Name" required>
+</div>
+<div class="button-container" style="text-align: center;"> <!-- Added container with text-align center -->
+    <button type="submit" class="query-button">Search</button> <!-- The button is inside the centered container -->
+</div>
+</form>
+{% if result7 and result7 != 'Invalid' %}
+<div style="margin-top: 20px; text-align: center; font-size: 18px; color: #4e4ffa;">
+    <p><strong>Average Flight Time From {{country1}} To {{country2}}:</strong> {{ result7 }}</p>
+</div><br>
+{% endif %}
+
+{% if result7 == 'Invalid' %}
+<div style="margin-top: 20px; text-align: center; font-size: 18px; color: #4e4ffa;">
+    <p><strong>There Are No Flights From {{country1}} To {{country2}}</strong></p>
+</div><br>
+{% endif %}

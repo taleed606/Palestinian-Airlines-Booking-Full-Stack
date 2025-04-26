@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flights.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <header>
+        <h1 class="available-flights-title">Available Flights</h1>
+    </header>
+
+    <div class="filters">
+        <!-- Filter Button -->
+        <button class="filter-btn" id="filterBtn">Filters</button>
+    
+        <!-- Modal (Hidden by default, will show when the button is clicked) -->
+        <div id="filterModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <!-- Close Button -->
+                <span class="close" id="closeBtn">&times;</span>
+    
+                <h3>Filter Flights</h3>
+    
+                <!-- Price Scale -->
+                <div class="filter-section">
+                    <label for="priceRange">From Price</label>
+                    <input type="range" id="priceRange" name="priceRange" min="0" max="10000" step="5" value="500">
+                    <span id="priceValue">$500</span>
+                </div>
+    
+                <!-- Duration Scale -->
+                <div class="filter-section">
+                    <label for="durationRange">From Duration (hours)</label>
+                    <input type="range" id="durationRange" name="durationRange" min="0" max="10" step="0.5" value="5">
+                    <span id="durationValue">5 hours</span>
+                </div>
+    
+                <!-- Hidden inputs to store selected values -->
+                <form id="filtersForm" action="/filter-flights" method="POST">
+                    <input type="hidden" id="selectedPrice" name="price" value="500">
+                    <input type="hidden" id="selectedDuration" name="duration" value="5">
+    
+                    <button type="submit" class="apply-filters-btn">Apply Filters</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sort Dropdown Form -->
+        <form action="/sort-flights" method="POST" class="sort-form">
+            <label for="sortDropdown" class="sort-label">Sort by:</label>
+            <select name="sortBy" id="sortDropdown" class="sort-dropdown" onchange="this.form.submit()">
+                <option value="">Sort by</option>
+                <option value="duration">Duration</option>
+                <option value="price">Price</option>
+                <option value="departure">Departure Time</option>
+                <option value="arrival">Arrival Time</option>
+            </select>
+        </form>
+    </div>
+    
+    <script>
+        // JavaScript to toggle modal visibility
+        // Update the displayed value when the price range slider changes
+        document.getElementById('priceRange').addEventListener('input', function() {
+            document.getElementById('priceValue').textContent = `$${this.value}`;
+            document.getElementById('selectedPrice').value = this.value; // Update the hidden price input
+        });
+
+        // Update the displayed value when the duration range slider changes
+        document.getElementById('durationRange').addEventListener('input', function() {
+            document.getElementById('durationValue').textContent = `${this.value} hours`;
+            document.getElementById('selectedDuration').value = this.value; // Update the hidden duration input
+        });
+
+        // Toggle the visibility of the filter modal
+        document.getElementById('filterBtn').addEventListener('click', function() {
+            const modal = document.getElementById('filterModal');
+            modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'block' : 'none';
+        });
+
+        // Close the modal when the user clicks the close button
+        document.getElementById('closeBtn').addEventListener('click', function() {
+            const modal = document.getElementById('filterModal');
+            modal.style.display = 'none';
+        });
+    </script>
+
+    <!-- New Bar with Column Titles -->
+    <div class="flight-header">
+        <div class="column flight-column">Flight</div>
+        <div class="column depart-column">Depart</div>
+        <div class="column arrive-column">Arrive</div>
+        <div class="column price-column">Price</div>
+    </div>
+
+    <section class="flights-container">
+        {% if flights %}
+            {% for flight in flights %}
+                <a href="{{ url_for('flight_details', ret_flight_id=flight.Retflightid if flight.Retflightid else '', go_flight_id=flight.Goflightid , flight_price=flight.total_price, go_dep_time=flight.Go_dep_time, go_arr_time=flight.Go_arr_time, ret_dep_time=flight.Ret_dep_time if flight.ReturnFlight else '', ret_arr_time=flight.Ret_arr_time if flight.ReturnFlight else '') }}" class="flight-card">
+
+                    <div class="flight-details">
+                        <p><strong>{{ flight.GoFlight }}{% if flight.ReturnFlight %} / {{ flight.ReturnFlight }}{% endif %}</strong></p>
+                        <p>{{ flight.Go_Airplane_model }}{% if flight.ReturnFlight %} / {{ flight.Ret_Airplane_model }}{% endif %}</p>
+                    </div>
+                
+                    <div class="depart-details">
+                        <p class="depart-country">{{ flight.Go_Departure_Country }}{% if flight.ReturnFlight %} / {{ flight.Ret_Departure_Country }}{% endif %}</p>
+                        <p class="depart-time">{{ flight.Go_dep_time }}{% if flight.ReturnFlight %} / {{ flight.Ret_dep_time }}{% endif %}</p>
+                    </div>
+                
+                    <div class="arrive-details">
+                        <p class="arrive-country">{{ flight.Go_Arrival_Country }}{% if flight.ReturnFlight %} / {{ flight.Ret_Arrival_Country }}{% endif %}</p>
+                        <p class="arrive-time">{{ flight.Go_arr_time }}{% if flight.ReturnFlight %} / {{ flight.Ret_arr_time }}{% else %} {% endif %}</p>
+                    </div>
+                    <div class="price-details">
+                        <p class="price">{{ flight.total_price }} $</p>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                <p>No flights found for the selected route and dates.</p>
+            </div>
+        {% endif %}
+    </section>
+</body>
+</html>

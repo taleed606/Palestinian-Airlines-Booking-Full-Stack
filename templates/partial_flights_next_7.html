@@ -1,0 +1,103 @@
+<!-- flights_next_7.html -->
+
+<!-- Check if data is provided -->
+{% if flights_next_7 %}
+  <!-- Chart Container -->
+  <div style="
+    max-width: 800px;
+    margin: 20px auto;
+    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(240,242,255,0.95));
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 30px 20px;">
+    
+    <!-- Section Title -->
+    <h3 style="
+      color: #3b3fc6;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;">
+      Flights Departing Each Day (Next 7 Days)
+    </h3>
+    
+    <!-- Chart Canvas -->
+    <div style="position: relative; height: 400px; width: 100%;">
+      <canvas id="myBarChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Chart.js Script (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Convert the "flights_next_7" data to a JSON string
+    const dataPoints = JSON.parse('{{ flights_next_7|tojson }}');
+    
+    // Extract labels (dates) and data (counts)
+    const labels = dataPoints.map(item => item.date);
+    const counts = dataPoints.map(item => item.count);
+
+    // Chart Initialization
+    const ctx = document.getElementById('myBarChart').getContext('2d');
+    const myBarChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Flights per Day',
+          data: counts,
+          backgroundColor: '#4e4ffa',
+          borderRadius: 8,  // Rounded bar corners
+          hoverBackgroundColor: '#3c3cd4'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.dataset.label}: ${context.raw} flights`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Number of Flights',
+              font: {
+                size: 14,
+                weight: 'bold'
+              }
+            },
+            ticks: {
+              stepSize: 1
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Date',
+              font: {
+                size: 14,
+                weight: 'bold'
+              }
+            }
+          }
+        },
+        animation: {
+          duration: 800,
+          easing: 'easeInOutQuad'
+        }
+      }
+    });
+  </script>
+
+{% else %}
+{% endif %}

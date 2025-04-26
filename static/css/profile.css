@@ -1,0 +1,105 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* White background for simplicity */
+    color: #333333; /* Dark text color for readability */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header styling */
+  header {
+    background-color: #3b3fc6; /* Calm blue header */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  /* Profile container styling */
+  .profile-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc; /* Simple border for the profile container */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  }
+  
+  /* Profile heading */
+  .profile-container h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Light border between rows */
+  }
+  
+  th {
+    background-color: #f4f4f4; /* Light gray background for headers */
+  }
+  
+  td {
+    color: #333;
+  }
+  
+  /* Button styling */
+  .btn {
+    display: inline-block;
+    background-color: #3b3fc6; /* Simple blue button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .btn:hover {
+    background-color: #3b3fc6; /* Slightly darker blue on hover */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .profile-container {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    table {
+      font-size: 0.9rem;
+    }
+  }
+  /* Message styling */
+.message {
+  background-color: #d4edda;  /* Light green background */
+  color: #155724;  /* Dark green text */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #c3e6cb;  /* Slightly darker green border */
+}

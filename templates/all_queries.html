@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Queries</title>
+
+
+  <style>
+    /* Basic reset & font */
+    * {
+      margin:0; 
+      padding:0; 
+      box-sizing:border-box;
+    }
+
+    header {
+
+        background-color: #08081c;
+        padding: 1rem;
+        text-align: center;
+        }
+
+        header h1 {
+        color: white;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background:#f8f8f8;
+      color:#444;
+      margin:0 auto;
+      max-width:1920px;
+    }
+
+    /* Top nav bar with 9 buttons */
+    .queries-nav {
+      background:#08081c;
+      padding:1rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem;
+      justify-content:center;
+    }
+    .queries-nav a {
+      background:#4e4ffa;
+      color:#fff;
+      text-decoration:none;
+      padding:0.5rem 1rem;
+      border-radius:4px;
+      font-weight:600;
+      transition: background 0.3s ease;
+    }
+    .queries-nav a:hover {
+      background:#3c3cd4;
+    }
+
+    /* Section styling */
+    section {
+      background:#fff;
+      margin:2rem auto;
+      max-width:1200px;
+      padding:1.5rem;
+      border-radius:4px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    section h2 {
+      font-size:1rem;
+      color:#4e4ffa;
+      margin-bottom:1rem;
+      text-transform:uppercase;
+    }
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:1rem;
+    }
+    table th, table td {
+      border:1px solid #ccc;
+      padding:0.6rem;
+      text-align:left;
+    }
+    table th {
+      background:#f0f2ff;
+      color:#333;
+    }
+  </style>
+
+
+</head>
+<body>
+
+
+    <header>
+      <h1 onclick="window.location.href='/'" style="text-align: left; margin-left: 0; cursor: pointer;">
+        Palestinian Airlines
+      </h1>
+    
+      </header>
+
+      <div class="Word1" style="display: flex; justify-content: center; align-items: center; padding-top: 50px; height: 20vh; flex-direction: column; text-align: center;">
+        <h1 style="font-size: 36px; color: #4e4ffa; font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin: 0; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+            Frequently Asked Queries
+        </h1>
+    </div>
+
+
+
+  <!-- Query 1 Section -->
+  <section id="q1">
+    <h2>Cheapest Flight</h2>
+    {% include 'partial_cheapest_from.html' %}
+  </section>
+
+  <!-- Query 2 Section -->
+  <section id="q2">
+    {% include 'partial_average_price.html' %}
+  </section>
+
+  <!-- Query 3 Section -->
+  <section id="q3">
+    <h2>Flights in the Next 7 Days</h2>
+    {% include 'partial_flights_next_7.html' %}
+      
+  </section>
+
+  <section id="q4">
+    <h2>Most Popular Flight route</h2>
+    {% include 'popularRoute.html' %}
+  </section>
+
+  <section id="q5">
+    <h2>Passenger Routes with Prices Above Average</h2>
+    {% include 'avgprice.html' %}
+  </section>
+
+
+  <section id="q6">
+    <h2>Passengers who have booked more than 2 flights but have never flown to a specific Country</h2>
+    {% include 'neverflown.html' %}
+  </section>
+
+  <section id="q7">
+    {% include 'average_time.html' %}
+  </section>
+
+  <section id="q8">
+    {% include 'airplane_earnings.html' %}
+  </section>
+
+  <section id="q9">
+    {% include 'cancelled_flights.html' %}
+  </section>
+
+</body>
+</html>

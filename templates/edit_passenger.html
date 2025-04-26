@@ -1,0 +1,130 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--font-family-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>Palestinian Airlines</title>
+        
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        
+        <!-- bootsnav -->
+        <link rel="stylesheet" href="../static/css/bootsnav.css" >	
+        
+        <!--style.css-->
+        <link rel="stylesheet" href="../static/css/insertpassengers.css">
+
+        <link rel="stylesheet" href="../static/css/style.css">
+
+        <link rel="stylesheet" href="../static/css/edit_passenger.css">
+
+        <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+
+    </head>
+    
+    <body style="background-color:rgba(255, 255, 255, 0.951);">
+    
+        {% include 'navbar.html' %}
+
+        <div class="Word1" style="display: flex; justify-content: center; align-items: center; padding-top: 50px; height: 30vh; flex-direction: column; text-align: center;">
+            <h1 style="font-size: 36px; color: #4e4ffa; font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin: 0; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+                Edit Passenger Details
+            </h1>
+            <p style="font-size: 16px; color: #666; margin-top: 10px; font-family: 'Arial', sans-serif; letter-spacing: 1px;">
+                Update the details below to keep passenger records accurate.
+            </p>
+            <div style="margin-top: 15px; padding: 10px 20px; border-radius: 15px; background: #f0f0f5; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); display: inline-block;">
+                <span style="font-size: 18px; color: #4e4ffa; font-weight: bold; font-family: 'Courier New', monospace; letter-spacing: 1px;">
+                    Passenger SSN: {{ ssn }}
+                </span>
+            </div>
+        </div>
+                
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div class="passenger-card" style="border: 1px solid #ddd; padding: 15px; border-radius: 10px; width: 1000px;">
+
+                <form method="POST">
+
+                    {{ form.hidden_tag() }}
+                    <br>
+                    <div class="Word4">
+                        <label for="gender">Gender:</label><br>
+                    </div>
+                    <select id="edit-gender" name="gender" class="OptionsBox">
+                        <option value="Male" style="font-size: 15px; color: #000000; margin-right: 40px;"  {% if gender == 'Male' %}selected{% endif %}>Male</option>
+                        <option value="Female" style="font-size: 15px; color: #000000; margin-right: 40px;" {% if gender == 'Female' %}selected{% endif %}>Female</option>
+                    </select>
+                    <br><br>    
+                    
+                    <label for="FirstName" class="Word4">{{ form.FirstName.label }}:</label><br>
+                    {{ form.FirstName(class="Word6", value=first_name) }}
+                    <div>
+                        {% for error in form.FirstName.errors %}
+                            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+                        {% endfor %}
+                    </div><br>
+
+                    <label for="LastName" class="Word4">{{ form.LastName.label }}:</label><br>
+                    {{ form.LastName(class="Word6", value=last_name) }}
+                    <div>
+                        {% for error in form.LastName.errors %}
+                            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+                        {% endfor %}
+                    </div><br>
+
+                    <label for="DateOfBirth" class="Word4">{{ form.DateOfBirth.label }}:</label><br>
+                    {{ form.DateOfBirth(class="Word6", value=date_of_birth) }}
+                    <div>
+                        {% for error in form.DateOfBirth.errors %}
+                            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+                        {% endfor %}
+                    </div><br>
+
+                    <div>
+                        <label for="edit-nationality" class="Word4">Nationality:</label><br>
+                        <select id="edit-nationality" name="nationality" class="OptionsBox" class="Word6">
+                            <option value="Palestinian" {% if nationality == 'Palestinian' %}selected{% endif %}>Palestinian</option>
+                            <option value="Bahraini" {% if nationality == 'Bahraini' %}selected{% endif %}>Bahraini</option>
+                            <option value="Cypriot" {% if nationality == 'Cypriot' %}selected{% endif %}>Cypriot</option>
+                            <option value="Egyptian" {% if nationality == 'Egyptian' %}selected{% endif %}>Egyptian</option>
+                            <option value="Iranian" {% if nationality == 'Iranian' %}selected{% endif %}>Iranian</option>
+                            <option value="Iraqi" {% if nationality == 'Iraqi' %}selected{% endif %}>Iraqi</option>
+                            <option value="Jordanian" {% if nationality == 'Jordanian' %}selected{% endif %}>Jordanian</option>
+                            <option value="Kuwaiti" {% if nationality == 'Kuwaiti' %}selected{% endif %}>Kuwaiti</option>
+                            <option value="Lebanese" {% if nationality == 'Lebanese' %}selected{% endif %}>Lebanese</option>
+                            <option value="Omani" {% if nationality == 'Omani' %}selected{% endif %}>Omani</option>
+                            <option value="Qatari" {% if nationality == 'Qatari' %}selected{% endif %}>Qatari</option>
+                            <option value="Saudi" {% if nationality == 'Saudi' %}selected{% endif %}>Saudi</option>
+                            <option value="Syrian" {% if nationality == 'Syrian' %}selected{% endif %}>Syrian</option>
+                            <option value="Turkish" {% if nationality == 'Turkish' %}selected{% endif %}>Turkish</option>
+                            <option value="Emirati" {% if nationality == 'Emirati' %}selected{% endif %}>Emirati</option>
+                            <option value="Yemeni" {% if nationality == 'Yemeni' %}selected{% endif %}>Yemeni</option>
+
+                        </select>
+                    </div><br>
+                
+                    <div style="display: flex; justify-content: center; align-items: center; height: 10vh;">
+                        {{ form.Submit(style="font-size: 16px; padding: 10px 30px; border-radius: 25px; color: white; background: #4e4ffa; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); border: none; transition: transform 0.3s ease, box-shadow 0.3s ease;") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+            
+        <div style="padding-top: 200px;"></div>
+
+
+        {% include 'all_rights.html' %}
+        
+    </body>
+    
+</html>

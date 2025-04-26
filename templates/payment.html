@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment - Palestinian Airlines</title>
+
+  <style>
+    /* Reset & Basic */
+    * {
+      margin: 0; 
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", Arial, sans-serif;
+    }
+
+    header {
+      background-color: #08081c;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      color: white;
+      cursor: pointer;
+    }
+
+    body {
+      background: #f8f8f8;
+      color: #444;
+    }
+
+    /* Flash Message */
+    .flash-message {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .flash-message.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .flash-error {
+      background: #e74c3c; /* Red for errors */
+      color: #fff;
+    }
+
+    .flash-success {
+      background: #2ecc71; /* Green for success */
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Left Section (Passengers + Payment Form) */
+    .left-section {
+      flex: 1 1 600px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    .left-section h2 {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      color: #4e4ffa;  /* main brand color */
+      text-transform: uppercase;
+    }
+
+    /* Passenger Card */
+    .passenger-card {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .passenger-card p {
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+    }
+    .passenger-card p span.label {
+      font-weight: 600;
+      color: #1f1d1d;
+    }
+    .child-tag {
+      color: #e74c3c;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-left: 6px;
+    }
+
+    /* Payment Form */
+    .payment-form {
+      margin-top: 1rem;
+    }
+    .payment-form .form-row {
+      margin-bottom: 1rem;
+    }
+    .payment-form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+      color: #292727;
+    }
+    .payment-form select,
+    .payment-form input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    .form-row-multiple {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-row-multiple .expiry-field {
+      flex: 1;
+    }
+    .store-card-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .store-card-option label {
+      margin-left: 0.4rem;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    .pay-button {
+      background: #4e4ffa;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      padding: 0.6rem 1.5rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.3s ease;
+      text-transform: uppercase;
+    }
+    .pay-button:hover {
+      background: #3c3cd4;
+    }
+
+    /* Right Section (Price) */
+    .price-section {
+      flex: 0 0 300px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-height: fit-content;
+    }
+    .price-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #4e4ffa;
+      text-transform: uppercase;
+    }
+    .price-breakdown {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+    .price-breakdown li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+    .price-breakdown .highlight {
+      color: #4e4ffa;
+    }
+    .total-price {
+      font-size: 1rem;
+      margin-top: 1rem;
+      border-top: 1px solid #ddd;
+      padding-top: 1rem;
+    }
+    .total-price strong {
+      font-weight: 700;
+    }
+
+    /* Footer "All Rights" */
+    .footer-all-rights {
+      background: #f3f3f3;
+      text-align: center;
+      padding: 0.8rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .left-section, .price-section {
+        flex: 1 1 100%;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 onclick="window.location.href='/'">
+      Palestinian Airlines - Billing
+    </h1>
+  </header>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="container">
+    <!-- Left Column -->
+    <div class="left-section">
+      <!-- Passengers Info -->
+      <h2>Passenger Details</h2>
+      <!-- Show Main User Name -->
+      <div class="passenger-card" style="border-left: 4px solid #4e4ffa;">
+        <p><span class="label">Main Contact:</span> {{ user.FirstName }} {{ user.LastName }}</p>
+        <p><span class="label">Email:</span> {{ user.Email }}</p>
+        <p><span class="label">Phone:</span> {{ user.PhoneNumber }}</p>
+      </div>
+      <!-- Show Each Passenger -->
+      {% for p in passengers %}
+      <div class="passenger-card">
+        <p><span class="label">Name:</span> {{ p.FirstName }} {{ p.LastName }} 
+        {% if p.DateOfBirth %}
+          {% set birth_year = p.DateOfBirth.split('-')[0]|int %}
+          {% set current_year = 2023 %}
+          {% set age = current_year - birth_year %}
+          {% if age < 12 %}
+            <span class="child-tag">(Child)</span>
+          {% endif %}
+        {% endif %}
+        </p>
+        <p><span class="label">Gender:</span> {{ p.Gender }}</p>
+        <p><span class="label">Nationality:</span> {{ p.Nationality }}</p>
+      </div>
+      {% endfor %}
+
+      <!-- Payment Section -->
+      <h2>How Would You Like to Pay?</h2>
+      <form class="payment-form" id="paymentForm" action="{{ url_for('process_payment') }}" method="POST">
+        <div class="form-row">
+          <label for="cardType">Card Type</label>
+          <select id="cardType" name="cardType" required>
+            <option value="">Select a card type</option>
+            <option value="Visa">Visa</option>
+            <option value="MasterCard">MasterCard</option>
+            <option value="Visa Electron">Visa Electron</option>
+            <option value="American Express">American Express</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" name="cardNumber" placeholder="xxxx xxxx xxxx xxxx" maxlength="16" required>
+        </div>
+
+        <div class="form-row-multiple">
+          <div class="expiry-field">
+            <label for="expiryMonth">Expiry Month</label>
+            <select id="expiryMonth" name="expiryMonth" required>
+              <option value="">MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="expiry-field">
+            <label for="expiryYear">Expiry Year</label>
+            <input type="text" id="expiryYear" name="expiryYear" placeholder="YYYY" maxlength="4" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" name="cvv" placeholder="xxx" maxlength="4" required>
+        </div>
+
+        <div class="form-row">
+          <label for="cardholderName">Cardholder Name</label>
+          <input type="text" id="cardholderName" name="cardholderName" placeholder="Name on card" required>
+        </div>
+
+        <div class="store-card-option">
+          <input type="checkbox" id="storeCard" name="storeCard">
+          <label for="storeCard">Store your card details for faster bookings</label>
+        </div>
+
+        <button type="submit" class="pay-button">Confirm &amp; Pay</button>
+      </form>
+    </div>
+
+    <!-- Right Column: Price Details -->
+    <div class="price-section">
+      <h3>Price Details</h3>
+      <ul class="price-breakdown">
+        <li><span>Base Fare</span><span class="highlight">USD {{ flight_price }}</span></li>
+        <li><span>Taxes &amp; Fees</span><span>Included</span></li>
+      </ul>
+      <div class="total-price">
+        Total Price: <strong>USD {{ flight_price }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with all rights reserved -->
+  <div class="footer-all-rights">
+    &copy; 2025 Palestinian Airlines. All rights reserved.
+  </div>
+
+  <!-- JavaScript for Form Validation and Flash Messages -->
+  <script>
+    // Function to display flashed messages from server
+    window.onload = function() {
+      const flashMessages = document.querySelectorAll('.flash-message');
+      flashMessages.forEach(function(msg) {
+        msg.classList.add('show');
+        // Hide after 3 seconds
+        setTimeout(() => {
+          msg.classList.remove('show');
+        }, 3000);
+      });
+    };
+
+    // Client-side validation
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+      // Get form values
+      const cardType = document.getElementById('cardType').value.trim();
+      const cardNumber = document.getElementById('cardNumber').value.trim();
+      const expiryMonth = document.getElementById('expiryMonth').value.trim();
+      const expiryYear = document.getElementById('expiryYear').value.trim();
+      const cvv = document.getElementById('cvv').value.trim();
+      const cardholderName = document.getElementById('cardholderName').value.trim();
+
+      // Simple Validation Flags
+      let isValid = true;
+      let errorMessage = '';
+
+      // Validate Card Type
+      if (!cardType) {
+        isValid = false;
+        errorMessage = 'Please select a card type.';
+      }
+
+      // Validate Card Number (16 digits)
+      const cardNumberRegex = /^\d{16}$/;
+      if (isValid && !cardNumberRegex.test(cardNumber)) {
+        isValid = false;
+        errorMessage = 'Please enter a valid 16-digit card number.';
+      }
+
+      // Validate Expiry Month
+      if (isValid && !expiryMonth) {
+        isValid = false;
+        errorMessage = 'Please select an expiry month.';
+      }
+
+      // Validate Expiry Year (e.g., current year or later)
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1; // Months are zero-based
+      if (isValid && (!/^\d{4}$/.test(expiryYear) || parseInt(expiryYear) < currentYear)) {
+        isValid = false;
+        errorMessage = 'Please enter a valid expiry year.';
+      } else if (isValid && parseInt(expiryYear) === currentYear && parseInt(expiryMonth) < currentMonth) {
+        isValid = false;
+        errorMessage = 'Card expiry is in the past.';
+      }
+
+      // Validate CVV (3 or 4 digits)
+      const cvvRegex = /^\d{3,4}$/;
+      if (isValid && !cvvRegex.test(cvv)) {
+        isValid = false;
+        errorMessage = 'Please enter a valid CVV.';
+      }
+
+      // Validate Cardholder Name
+      if (isValid && cardholderName.length < 2) {
+        isValid = false;
+        errorMessage = 'Please enter a valid cardholder name.';
+      }
+
+      // If not valid, prevent form submission and show flash message
+      if (!isValid) {
+        event.preventDefault(); // Prevent form submission
+
+        // Create flash message
+        const flashMessage = document.createElement('div');
+        flashMessage.classList.add('flash-message', 'flash-error');
+        flashMessage.textContent = errorMessage;
+
+        // Add to body
+        document.body.appendChild(flashMessage);
+
+        // Show the flash message
+        setTimeout(() => {
+          flashMessage.classList.add('show');
+        }, 100); // Slight delay to allow CSS transition
+
+        // Hide the flash message after 3 seconds and remove it
+        setTimeout(() => {
+          flashMessage.classList.remove('show');
+          setTimeout(() => {
+            flashMessage.remove();
+          }, 500); // Allow transition to complete
+        }, 3100);
+      }
+    });
+  </script>
+
+</body>
+</html>

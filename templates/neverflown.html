@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form Styles */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            text-align: center;
+        }
+
+        label {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3b3fc6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3b3fc6;
+        }
+
+        /* Error Message */
+        p {
+            color: red;
+            text-align: center;
+        }
+
+        /* Pie Chart Styling */
+        #statisticsChart {
+            max-width: 50%;
+            margin: 20px auto;
+        }
+
+        /* Table Styles */
+        table {
+            width: 70%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Form to Input Country for Query 2 -->
+    <form method="POST" action="/Taleedqueries2">
+        <label for="country">Enter Country:</label>
+        <input type="text" id="country" name="country" required value="{{ country }}" placeholder="Enter country name">
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Error Display for Query 2 -->
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <!-- No Data Message for Query 2 -->
+    {% if message2 %}
+        <p style="color: orange; text-align: center;">{{ message2 }}</p>
+    {% endif %}
+
+
+    <!-- Pie Chart Section for Query 2 (optional) -->
+    {% if result2 %}
+        <canvas id="statisticsChart"></canvas>
+        <script>
+            const data = {{ result2 | tojson }};
+            const labels = ['Meets Criteria', 'Does Not Meet Criteria'];
+            const values = [data[0].passenger_count, 100 - data[0].passenger_count];  // Assuming the data contains a count for each category
+
+            const ctx = document.getElementById('statisticsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie', 
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Passenger Count',
+                        data: values,
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(231, 74, 74, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(231, 74, 74, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+</body>
+</html>

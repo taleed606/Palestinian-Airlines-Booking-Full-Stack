@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--font-family-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>Palestinian Airlines</title>
+        
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        
+        <!-- bootsnav -->
+        <link rel="stylesheet" href="../static/css/bootsnav.css" >	
+        
+        <!--style.css-->
+        <link rel="stylesheet" href="../static/css/manage_flight.css">
+
+        <link rel="stylesheet" href="../static/css/insertpassengers.css">
+
+        <link rel="stylesheet" href="../static/css/style.css">
+
+
+    </head>
+    
+    <body style="background-color:rgba(255, 255, 255, 0.951);">
+    
+        {% include 'navbar.html' %}
+
+        <div style="display: flex; justify-content: center; align-items: center; height: 82vh; flex-direction: column; text-align: center; gap: 20px;">
+            <h1 style="font-size: 36px; color: #4e4ffa;">Error {{error}}!</h1>
+            <h1 style="font-size: 36px; color: #4e4ffa;">Oops! Something went wrong.</h1>
+            <p style="font-size: 18px; color: #555;">It seems the page you're looking for doesn't exist or an error has occurred.</p>
+            <a href="/" class="btn btn-primary" style="background-color: #4e4ffa; border-color: #4e4ffa; padding: 10px 20px; text-decoration: none; color: white; font-size: 16px; border-radius: 5px;">
+                Go Back to Home
+            </a>
+        </div>
+        
+        {% include 'all_rights.html' %}
+        
+    </body>
+    
+</html>

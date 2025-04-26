@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+	
+	<style>
+		.overlay{
+			background: url("{{ url_for('static', filename='images/log-in/flight.jpg') }}");
+		}
+	</style>
+</head>
+<div><br><br><br><br></div>
+<header>
+	<h1 onclick="window.location.href='/'" style="text-align: left; margin-left: 0; cursor: pointer;">
+	  Palestinian Airlines
+	</h1>
+  
+	</header>
+{% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+		{% for category, message in messages %}
+			<div class="alert alert-{{ category }} custom-alert" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+<div>
+	<br>
+</div>
+<div class="container" id="container">
+	
+	<div class="form-container sign-up-container">
+		<form method="post" action="/sign_up">
+			<h1>Create Account</h1>
+			<div>
+				<br>
+			</div>
+
+			{{ form.hidden_tag() }}
+
+			{{ form.FirstName(class_="form-control") }}
+			{% for error in form.FirstName.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.LastName(class_="form-control") }}
+			{% for error in form.LastName.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.Email(class_="form-control") }}
+			{% for error in form.Email.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.Password(class_="form-control") }}
+			{% for error in form.Password.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.ConfirmPassword(class_="form-control") }}
+			{% for error in form.ConfirmPassword.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.PhoneNumber(class_="form-control") }}
+			{% for error in form.PhoneNumber.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.DateOfBirth(class_="form-control") }}
+			{% for error in form.DateOfBirth.errors %}
+				<div class="error" style="color: red; font-size: 12px;">
+					{{ error }}
+				</div>
+			{% endfor %}
+
+			{{ form.Next(style="border-radius: 30px; background-color: #3b3fc6; color: #FFFFFF; font-size: 12px; font-weight: bold;") }}
+		
+		</form>
+	</div>
+	<!--*TALEED**-->
+	<div class="form-container log-in-container">
+		<form action="/login" method="POST">
+			<h1>Log in</h1>
+			<div><br></div>
+
+			{% if error %}
+			<p class="error-message">{{ error }}</p>
+			{% endif %}
+
+			<input type="email" name="email" placeholder="Email" required />
+			<input type="password" name="password" placeholder="Password" required />
+			<div><br></div>
+			<button type="submit">Log In</button>
+		</form>
+	</div>
+
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="logIn">Log In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div><br></div>
+
+<script>
+	const signUpButton = document.getElementById('signUp');
+	const logInButton = document.getElementById('logIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+		container.classList.add("right-panel-active");
+	});
+
+	logInButton.addEventListener('click', () => {
+		container.classList.remove("right-panel-active");
+	});
+</script>

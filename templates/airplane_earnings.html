@@ -1,0 +1,101 @@
+<h2>Airpalne With Earnings More Than Average</h2><br>
+<form method="POST" action="/airplane_earnings">
+  <div class="form-group" style="padding-right: 70px;">
+    <label for="start_date">Start Date:</label>
+    <input type="date" id="start_date" name="start_date" required>
+  </div>
+  <div class="form-group" style="padding-right: 70px;">
+    <label for="end_date">End Date:</label>
+    <input type="date" id="end_date" name="end_date" required>
+  </div>
+  <div class="button-container" style="text-align: center;"> <!-- Added container with text-align center -->
+    <button type="submit" class="query-button">Search</button> <!-- The button is inside the centered container -->
+  </div>
+</form>
+
+{% if error8 %}
+  <div style="margin-top: 20px; text-align: center; font-size: 18px; color: #4e4ffa;">
+    <p><strong>Invalid Date.</strong></p>
+  </div><br>
+{% elif results8 and results8 != 'Invalid' %}
+  <div style="margin-top: 20px; text-align: center; font-size: 18px; color: #4e4ffa;">
+    <p><strong>In The Given Period: {{start_date}} to {{end_date}}</strong></p>
+  </div><br>
+  {% for airplane in results8 %}
+    <div style="margin-top: 20px; text-align: center; font-size: 18px; color: #4e4ffa;">
+      <p>Airplane Model <strong>{{airplane['Model']}}</strong> Has Total Earnings Of <strong>{{airplane['Earnings']}}</strong></p>
+    </div><br>
+  {% endfor %}
+{% elif results8 == 'Invalid' %}
+  <div style="margin-top: 20px; text-align: center; font-size: 18px; color: #4e4ffa;">
+    <p><strong>No Flights In This Period</strong></p>
+  </div><br>
+{% endif %}
+
+<style>
+  /* General section styling for q8 */
+  #q8 {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+
+  /* Form group styling for q8 */
+  .form-group {
+    display: flex; /* Align label and input side by side */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 15px;
+  }
+
+  /* Label styling for q8 */
+  #q8 label {
+    width: 200px; /* Fixed width for labels */
+    font-weight: bold;
+    color: #555;
+    text-align: right; /* Align text to the right for better spacing */
+    margin-right: 10px; /* Space between label and input */
+  }
+
+  /* Input fields styling for q8 */
+  #q8 input[type="date"] {
+    width: 400px; /* Adjusted input width */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  /* Styling for the submit button */
+  .query-button {
+    width: 400px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3b3fc6;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .query-button:hover {
+    background-color: #3b3fc6;
+  }
+
+  /* Center the button using flexbox in button-container */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Optional, adds spacing */
+  }
+</style>

@@ -1,0 +1,650 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--font-family-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>Palestinian Airlines</title>
+
+        <!-- For favicon png -->
+        <link rel="shortcut icon" type="image/icon" href="../static/logo/favicon.png"/>
+       
+        <!--font-awesome.min.css-->
+        <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+
+        <!--linear icon css-->
+        <link rel="stylesheet" href="../static/css/linearicons.css">
+
+        <!--flaticon.css-->
+        <link rel="stylesheet" href="../static/css/flaticon.css">
+
+        <!--animate.css-->
+        <link rel="stylesheet" href="../static/css/animate.css">
+
+        <!--owl.carousel.css-->
+        <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="../static/css/owl.theme.default.min.css">
+        
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        
+        <!-- bootsnav -->
+        <link rel="stylesheet" href="../static/css/bootsnav.css" >	
+        
+        <!--style.css-->
+        <link rel="stylesheet" href="../static/css/style.css">
+        
+        <!--responsive.css-->
+        <link rel="stylesheet" href="../static/css/responsive.css">
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+    <body style="background-color: #f9f9f9;">
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        
+    
+        <!--welcome-hero start -->
+        <section id="home" class="welcome-hero">
+
+            <!-- top-area Start -->
+            <div class="top-area">
+                <div class="header-area">
+                    <!-- Start Navigation -->
+                    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
+                        <div class="container-fluid">
+                            <!-- Start Header Navigation -->
+                            <div class="navbar-header col-xs-6 col-sm-4">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                                <a class="navbar-brand" href="/">Palestinian Airlines</a>
+                            </div>
+                            <!-- End Header Navigation -->
+                    
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse menu-ui-design col-xs-6 col-sm-8" id="navbar-menu">
+                                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                                    <li class="scroll active"><a href="#home">Home</a></li>
+                                    <li class="scroll"><a href="#book">Book</a></li>
+                                    <li class="scroll"><a href="#flight-status">Flight Status</a></li>
+                                    <li><a href="/manage_flight">Manage Flight</a></li>
+                                    <li><a href="/myReservations">My Reservations</a></li>
+                                    <li class="scroll"><a href="#contact">Contact Us</a></li>
+                                    <ul class="nav navbar-nav navbar-right account-options">
+                                        
+                                        
+                                        <!-- Signup Button -->
+                                        {% if user.is_authenticated %}
+                                            <li class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                    Account <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="/profile">Profile</a></li>
+                                                    <li><a href="/logout">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                        {% else %}
+                                            <li><a href="/login" class="btn-signup">Login/Sign Up</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </ul>
+                               
+                            </div>
+                            
+                        </div>
+                        <!--/.container-fluid-->
+                    </nav>
+                    
+                    <!-- End Navigation -->
+                </div><!--/.header-area-->
+                <div class="clearfix"></div>
+
+            </div><!-- /.top-area-->
+            <!-- top-area End -->
+
+            <!-- Hero Image -->
+            <div class="welcome-hero-text">
+                {% if user.is_authenticated %}
+                    <h1>Hello, {{ user.firstname }}</h1>
+                {% endif %}
+                <h1>Welcome to Palestinian Airlines</h1>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="container" id="book">
+                <div style="height: 180px;"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Trip Form -->
+                        <form action="/search-flights" method="POST">
+
+                            <!-- Trip Type Radio Buttons -->
+                            <div class="trip-type">
+                                <label class="radio-inline">
+                                    <input type="radio" name="tripType" value="oneWay" checked> One Way
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="tripType" value="roundTrip"> Round Trip
+                                </label>
+                            </div>
+
+                            <!-- From and To Fields -->
+                            <div class="location-fields row">
+                                <!-- From Field -->
+                                <div class="form-group col-md-6">
+                                    <label for="fromLocation">From</label>
+                                    <input type="text" id="fromLocation" name="fromLocation" class="form-control"
+                                        list="airportList" placeholder="Departure City or Airport" required>
+                                </div>
+                            
+                                <!-- To Field -->
+                                <div class="form-group col-md-6">
+                                    <label for="toLocation">To</label>
+                                    <input type="text" id="toLocation" name="toLocation" class="form-control"
+                                        list="airportList" placeholder="Destination City or Airport" required>
+                                </div>
+                            </div>
+
+                            <!-- Datalist for Autocomplete Suggestions -->
+                            <datalist id="airportList">
+                                <option value="Cairo International Airport (CAI)">
+                                <option value="King Abdulaziz International Airport (JED)">
+                                <option value="Dubai International Airport (DXB)">
+                                <option value="Beirut–Rafic Hariri International Airport (BEY)">
+                                <option value="Doha International Airport (DOH)">
+                                <option value="Kuwait International Airport (KWI)">
+                                <option value="King Khalid International Airport (RUH)">
+                                <option value="Abu Dhabi International Airport (AUH)">
+                                <option value="Queen Alia International Airport (AMM)">
+                                <option value="Muscat International Airport (MCT)">
+                                <option value="O.R. Tambo International Airport (JNB)">
+                                <option value="Cape Town International Airport (CPT)">
+                                <option value="Port Elizabeth International Airport (PLZ)">
+                                <option value="King Shaka International Airport (DUR)">
+                                <option value="East London Airport (ELS)">
+                            </datalist>
+
+                            <!-- Date Fields -->
+                            <!-- Date Fields -->
+                            <div class="date-fields row">
+                                <div class="form-group col-md-6">
+                                    <label for="departureDate">Departure Date</label>
+                                    <input type="date" id="departureDate" name="departureDate" class="form-control"  min="{{ today }}" required>
+                                </div>
+                                <div class="form-group col-md-6" id="return-date-group" style="display: none;">
+                                    <label for="returnDate">Return Date</label>
+                                    <input type="date" id="returnDate" name="returnDate" class="form-control"  min="{{ today }}" >
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="NumofAdults">Number of Adults</label>
+                                    <input type="number" id="NumofAdults" name="NumofAdults" class="form-control" style="width: 100%;" min="1" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="NumofChildren">Number of Children</label>
+                                    <input type="number" id="NumofChildren" name="NumofChildren" class="form-control" style="width: 100%;">
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="button-group">
+                                <!-- Submit the form on button click -->
+                                <button type="submit" class="welcome-btn model-search-btn">
+                                    Search Flights
+                            </div>
+
+                        </form> <!-- End of the form -->
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- JavaScript code for Trip Form -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const tripTypeRadios = document.querySelectorAll('input[name="tripType"]');
+                    const departureDateInput = document.getElementById('departureDate');
+                    const returnDateGroup = document.getElementById('return-date-group');
+                    const returnDateInput = document.getElementById('returnDate');
+
+                    // Function to handle the visibility of the return date field
+                    function toggleDateFields() {
+                        if (document.querySelector('input[name="tripType"]:checked').value === 'roundTrip') {
+                            returnDateGroup.style.display = 'block';
+
+                            // Set return date to the same value as departure date
+                            if (departureDateInput.value) {
+                                returnDateInput.value = departureDateInput.value;
+                            }
+
+                        } else {
+                            returnDateGroup.style.display = 'none';
+                        }
+                    }
+
+                    // Event listeners for trip type changes
+                    tripTypeRadios.forEach(radio => {
+                        radio.addEventListener('change', toggleDateFields);
+                    });
+
+                    // Initial check in case the page is loaded with a round trip selected
+                    toggleDateFields();
+
+                    // Sync return date with departure date if departure date is updated
+                    departureDateInput.addEventListener('change', function() {
+                        if (document.querySelector('input[name="tripType"]:checked').value === 'roundTrip') {
+                            returnDateInput.value = departureDateInput.value;
+                        }
+                    });
+                });
+            </script>
+
+        </section><!--/.welcome-hero-->
+
+        <!--welcome-hero end -->
+        <!-- TALEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD-->
+        <section id="flight-status" class="flight-status">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="flight-status-title">Flight Status Check</h2>
+        
+                        <!-- Flight Status Form -->
+                        <form id="flight-status-form" class="flight-status-form" method="POST" action="/check-status">
+                            <div class="form-group">
+                                <label for="flightNumber">Enter Flight Number:</label>
+                                <input type="text" id="flightNumber" name="flightNumber" class="form-control flight-input"
+                                       placeholder="e.g., DXB348" required>
+                            </div>
+        
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary flight-status-btn">Check Status</button>
+                            </div>
+                        </form>
+        
+                        <!-- Flight Status Result -->
+                        <div id="status-result" class="status-result" style="display:none;">
+                            <h4>Status for Flight <span id="flight-num"></span></h4>
+                            <div id="status-message">
+                                <!-- Flight status message will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <script>
+            document.getElementById('flight-status-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+        
+                // Create a FormData object to capture the form data
+                const formData = new FormData(e.target);
+        
+                // Send the form data using Fetch
+                fetch('/check-status', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.text()) // Get the response as plain text
+                    .then(data => {
+                        // Insert the response into the status-message div
+                        document.getElementById('status-message').innerHTML = data;
+        
+                        // Update the flight number display
+                        const flightNumber = document.getElementById('flightNumber').value.trim();
+                        document.getElementById('flight-num').textContent = flightNumber;
+        
+                        // Show the status-result container
+                        document.getElementById('status-result').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        </script>
+        
+
+        <!--special-offers start -->
+        <section id="special-offers" class="special-offers">
+            <div class="container">
+                <div><br></div>
+                <div class="section-header">
+                    <p>Check out our <span>special</span> offers</p>
+                    <h2>Special Offers</h2>
+                </div><br><!--/.section-header-->
+                <div class="special-offers-content">
+                    <div class="row">
+                        <!-- Offer Item -->
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-special-offer">
+                                <div class="special-offer-img-box">
+                                    <div class="special-offer-img">
+                                        <img src="../static/images/featured-flights/fc1.png" alt="Offer Image">
+                                    </div>
+                                    <div class="special-offer-info">
+                                        <div class="price" style="text-align: center;"> <!-- Inline style for centering -->
+                                            <p>${{ flight1['price'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="special-offer-txt" style="text-align: center;"> <!-- Inline style for centering -->
+                                    <h2>
+                                        <a href="/"
+                                           class="fill-inputs"
+                                           data-departure="{{ flight1['departure_airport'] }}"
+                                           data-arrival="{{ flight1['arrival_airport'] }}"
+                                           data-date="{{ flight1['departure_date'] }}">
+                                           {{ flight1['departure_country'] }} to {{ flight1['arrival_country'] }}
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Enjoy a special discount on flights from {{ flight1['departure_country'] }} to {{ flight1['arrival_country'] }}. Limited time offer!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-special-offer">
+                                <div class="special-offer-img-box">
+                                    <div class="special-offer-img">
+                                        <img src="../static/images/featured-flights/fc2.png" alt="Offer Image">
+                                    </div>
+                                    <div class="special-offer-info">
+                                        <div class="price" style="text-align: center;"> <!-- Inline style for centering -->
+                                            <p>${{ flight2['price'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="special-offer-txt" style="text-align: center;"> <!-- Inline style for centering -->
+                                    <h2>
+                                        <a href="/"
+                                           class="fill-inputs"
+                                           data-departure="{{ flight2['departure_airport'] }}"
+                                           data-arrival="{{ flight2['arrival_airport'] }}"
+                                           data-date="{{ flight2['departure_date'] }}">
+                                           {{ flight2['departure_country'] }} to {{ flight2['arrival_country'] }}
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Enjoy a special discount on flights from {{ flight2['departure_country'] }} to {{ flight2['arrival_country'] }}. Limited time offer!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-special-offer">
+                                <div class="special-offer-img-box">
+                                    <div class="special-offer-img">
+                                        <img src="../static/images/featured-flights/fc3.png" alt="Offer Image">
+                                    </div>
+                                    <div class="special-offer-info">
+                                        <div class="price" style="text-align: center;"> <!-- Inline style for centering -->
+                                            <p>${{ flight3['price'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="special-offer-txt" style="text-align: center;"> <!-- Inline style for centering -->
+                                    <h2>
+                                        <a href="/"
+                                           class="fill-inputs"
+                                           data-departure="{{ flight3['departure_airport'] }}"
+                                           data-arrival="{{ flight3['arrival_airport'] }}"
+                                           data-date="{{ flight3['departure_date'] }}">
+                                           {{ flight3['departure_country'] }} to {{ flight3['arrival_country'] }}
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Enjoy a special discount on flights from {{ flight3['departure_country'] }} to {{ flight3['arrival_country'] }}. Limited time offer!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-special-offer">
+                                <div class="special-offer-img-box">
+                                    <div class="special-offer-img">
+                                        <img src="../static/images/featured-flights/fc4.png" alt="Offer Image">
+                                    </div>
+                                    <div class="special-offer-info">
+                                        <div class="price" style="text-align: center;"> <!-- Inline style for centering -->
+                                            <p>${{ flight4['price'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="special-offer-txt" style="text-align: center;"> <!-- Inline style for centering -->
+                                    <h2>
+                                        <a href="/"
+                                           class="fill-inputs"
+                                           data-departure="{{ flight4['departure_airport'] }}"
+                                           data-arrival="{{ flight4['arrival_airport'] }}"
+                                           data-date="{{ flight4['departure_date'] }}">
+                                           {{ flight4['departure_country'] }} to {{ flight4['arrival_country'] }}
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Enjoy a special discount on flights from {{ flight4['departure_country'] }} to {{ flight4['arrival_country'] }}. Limited time offer!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                // Get all links with the class "fill-inputs"
+                                const offerLinks = document.querySelectorAll('.fill-inputs');
+                        
+                                // Add click event listeners
+                                offerLinks.forEach(link => {
+                                    link.addEventListener('click', function (event) {
+                                        event.preventDefault(); // Prevent the default anchor behavior
+                        
+                                        // Retrieve data from the clicked link
+                                        const departure = this.dataset.departure;
+                                        const arrival = this.dataset.arrival;
+                                        const datee = this.dataset.date;
+                        
+                                        // Set values in the input fields
+                                        document.getElementById('fromLocation').value = departure;
+                                        document.getElementById('toLocation').value = arrival;
+                                        document.getElementById('departureDate').value = datee;
+                        
+                                        // Scroll to the 'book' section
+                                        document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
+                                    });
+                                });
+                            });
+                        </script>
+                        
+                        
+                        <!-- Add more offers as needed -->
+                    </div>
+                </div>
+            </div><!--/.container-->
+
+        </section><!--/.special-offers-->
+        <!--special-offers end -->
+
+        <div><br><br><br></div>
+
+        <div class="section-header">
+            <p>Check out some <span>Customers</span> queires</p>
+            <h2>Frequently Asked Queries</h2>
+        </div><br>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/statistics" class="btn btn-primary" 
+               style="background-color: #3b3fc6; 
+                      border-color: #3b3fc6; 
+                      padding: 10px 20px; 
+                      text-decoration: none; 
+                      color: white; 
+                      font-size: 16px; 
+                      border-radius: 5px; 
+                      display: inline-block;">
+            Check It Out    
+            </a>
+        </div>
+        <div><br><br><br></div>        
+
+        
+
+        <!--contact start-->
+        <footer id="contact"  class="contact">
+            <div class="container">
+                <div class="footer-top">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="single-footer-widget">
+                                <div class="footer-logo">
+                                    <a href="/">Palestinian Airlines</a>
+                                </div>
+                                <p>
+                                    Committed to providing exceptional travel experiences with comfort and reliability.
+                                </p>
+                                <div class="footer-contact">
+                                    <p>info@palairlines.com</p>
+                                    <p>+1 (800) 123-4567</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h2>About Us</h2>
+                                <ul>
+                                    <li><a href="#">Our Story</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Terms of Service</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="single-footer-widget">
+                                <h2>Destinations</h2>
+                                <div class="row">
+                                    <div class="col-md-7 col-xs-6">
+                                        <ul>
+                                            <li><a href="#">New York</a></li>
+                                            <li><a href="#">London</a></li>
+                                            <li><a href="#">Paris</a></li>
+                                            <li><a href="#">Dubai</a></li>
+                                            <li><a href="#">Tokyo</a></li>
+                                            <li><a href="#">Sydney</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-5 col-xs-6">
+                                        <ul>
+                                            <li><a href="#">Berlin</a></li>
+                                            <li><a href="#">Rome</a></li>
+                                            <li><a href="#">Moscow</a></li>
+                                            <li><a href="#">Beijing</a></li>
+                                            <li><a href="#">Cairo</a></li>
+                                            <li><a href="#">Toronto</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1 col-md-3 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h2>Newsletter</h2>
+                                <div class="footer-newsletter">
+                                    <p>
+                                        Subscribe to get the latest news and special offers.
+                                        
+                                    </p>
+                                </div>
+                                <div class="hm-foot-email">
+                                    <div class="foot-email-box">
+                                        <input type="email" class="form-control" placeholder="Your Email">
+                                    </div><!--/.foot-email-box-->
+                                    <div class="foot-email-subscribe">
+                                        <span><i class="fa fa-arrow-right"></i></span>
+                                    </div><!--/.foot-email-icon-->
+                                </div><!--/.hm-foot-email-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                &copy; 2025 Palestinian Airlines. All rights reserved.
+                            </p><!--/p-->
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="footer-social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>	
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.footer-copyright-->
+            </div><!--/.container-->
+
+            <div id="scroll-Top">
+                <div class="return-to-top">
+                    <i class="fa fa-angle-up " id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+                </div>
+                
+            </div><!--/.scroll-Top-->
+            
+        </footer><!--/.contact-->
+        <!--contact end-->
+
+        <!-- Include all js compiled plugins (below), or include individual files as needed -->
+        <script src="../static/js/jquery.js"></script>
+        
+        <!--modernizr.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        
+        <!--bootstrap.min.js-->
+        <script src="../static/js/bootstrap.min.js"></script>
+        
+        <!-- bootsnav js -->
+        <script src="../static/js/bootsnav.js"></script>
+
+        <!--owl.carousel.js-->
+        <script src="../static/js/owl.carousel.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+        <!--Custom JS-->
+        <script src="../static/js/custom.js"></script>
+        
+    </body>
+    
+</html>

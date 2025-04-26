@@ -1,0 +1,44 @@
+{% if result3 %}
+    <div>
+        {% for row in result3 %}
+            <p><strong>Flight Count:</strong> {{ row.flightCount }}</p>
+            <p><strong>Departure Country:</strong> {{ row.depCountry }}</p>
+            <p><strong>Arrival Country:</strong> {{ row.arrCountry }}</p>
+            <hr>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if message3 %}
+    <p class="message">{{ message3 }}</p>
+{% endif %}
+
+<!-- Button to navigate to Taleedquery3 -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/Taleedquery3" class="query-button">View Most Popular Flight Routes</a>
+</div>
+
+<style>
+    .query-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #3b3fc6;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .query-button:hover {
+        background-color: #3b3fc6;
+    }
+
+    .message {
+        color: red;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>

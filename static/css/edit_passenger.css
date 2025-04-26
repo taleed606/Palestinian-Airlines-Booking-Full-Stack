@@ -1,0 +1,16 @@
+.passenger-card {
+    border: 1px solid #ddd; 
+    padding: 20px; 
+    border-radius: 15px; 
+    width: 1000px; 
+    background-color: #f9f9f9; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    font-family: 'Arial', sans-serif; 
+    margin: 20px auto; 
+    transition: box-shadow 0.3s ease; 
+}
+
+/* Hover effect */
+.passenger-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); 
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_profile.css') }}">
+</head>
+<body>
+  <header style="background-color: black;">
+    <h1 onclick="window.location.href='/'" style="text-align: left; margin-left: 0; cursor: pointer; color: white;">
+      Palestinian Airlines
+    </h1>
+</header>
+      
+  <div class="Word1" style="display: flex; justify-content: center; align-items: center; padding-top: 50px; height: 20vh; flex-direction: column; text-align: center;">
+    <h1 style="font-size: 36px; color: #4e4ffa; font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin: 0; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+      Edit Your Profile
+    </h1>
+    </div>
+
+  <div class="profile-container">
+    <h2>Edit Your Information</h2>
+
+    <!-- Edit Profile Form -->
+    <form method="POST" action="">
+
+        {{ form.hidden_tag() }}
+
+        <label for="FirstName">{{ form.FirstName.label }}</label><br>
+        {{ form.FirstName(class="Word6", value=firstname) }}
+        {% for error in form.FirstName.errors %}
+            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+        {% endfor %}
+  
+        <label for="FirstName">{{ form.LastName.label }}</label><br>
+        {{ form.LastName(class="Word6", value=lastname) }}
+        {% for error in form.LastName.errors %}
+            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+        {% endfor %}
+
+        <label for="FirstName">{{ form.DateOfBirth.label }}</label><br>
+        {{ form.DateOfBirth(class="Word6", value=birthdate) }}
+        {% for error in form.DateOfBirth.errors %}
+            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+        {% endfor %}
+
+        <label for="FirstName">{{ form.PhoneNumber.label }}</label><br>
+        {{ form.PhoneNumber(class="Word6", value=phone) }}
+        {% for error in form.PhoneNumber.errors %}
+            <span class="Word4" style="color: red; font-size: 15px;">{{ error }}</span>
+        {% endfor %}
+
+        {{ form.Next2(style="font-size: 16px; padding: 10px 30px; border-radius: 25px; color: white; background: #4e4ffa; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); border: none; transition: transform 0.3s ease, box-shadow 0.3s ease;") }}
+
+    </form>
+  </div>
+
+</body>
+</html>

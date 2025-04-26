@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Confirmation</title>
+    <style>
+      /* Basic reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      body {
+        background: #f8f8f8;
+        color: #333;
+        margin: 0;
+      }
+
+      header {
+      
+      background-color: #08081c;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      color: white;
+    }
+
+      /* Top bar: Palestinian Airline in black bar */
+      .top-black-bar {
+        background: #000;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .top-black-bar:hover {
+        background-color: #333;
+      }
+      /* Container */
+      .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+      }
+      /* Header info (Doc Issue Date, booking ref, etc.) */
+      .header-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+      .header-info .issue-date {
+        color: #333;
+        font-size: 0.95rem;
+      }
+      .header-info .booking-ref {
+        color: #333;
+        font-size: 0.95rem;
+      }
+      .header-info span {
+        font-weight: 500;
+      }
+
+      /* Title bar in #4e4ffa */
+      .title-bar {
+        background: #4e4ffa;
+        color: #fff;
+        padding: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .title-bar h2 {
+        font-size: 1.1rem;
+        margin: 0;
+      }
+
+      /* Traveler box */
+      .traveler-box {
+        background: #f0f2ff;
+        border-left: 4px solid #4e4ffa;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+      }
+      .traveler-box h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .traveler-box ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      .traveler-box li {
+        margin-bottom: 0.3rem;
+        font-size: 0.9rem;
+      }
+
+      /* Flight details */
+      .flight-details {
+        margin-bottom: 1rem;
+      }
+      .flight-details h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #4e4ffa;
+      }
+      .flight-details p {
+        margin-bottom: 0.2rem;
+        font-size: 0.9rem;
+      }
+
+      /* Ticket details list */
+      .ticket-ids {
+        margin-bottom: 1.5rem;
+        background: #fafafa;
+        border: 1px solid #eee;
+        padding: 0.8rem;
+        border-radius: 4px;
+      }
+      .ticket-ids h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #4e4ffa;
+      }
+      .ticket-ids p {
+        font-size: 0.9rem;
+        margin-bottom: 0.2rem;
+      }
+
+      /* Price info */
+      .price-info {
+        background: #fafafa;
+        border: 1px solid #eee;
+        padding: 0.8rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .price-info h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #4e4ffa;
+      }
+      .price-info p {
+        font-size: 0.9rem;
+      }
+
+      /* Footer note */
+      .footer-note {
+        text-align: center;
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 2rem;
+      }
+
+      /* A small "logo" area or brand bar if desired */
+      .brand-footer {
+        background: #4e4ffa;
+        color: #fff;
+        padding: 0.7rem;
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 onclick="window.location.href='/'">
+          Palestinian Airlines - Ticket
+        </h1>
+      
+      </header>
+
+    
+    
+
+  <div class="container">
+    <div class="header-info">
+      <div class="issue-date">
+        <span>Document Issue Date:</span> {{ doc_issue_date }}
+      </div>
+      <div class="booking-ref">
+        <span>Booked</span> 
+      </div>
+    </div>
+
+    <div class="title-bar">
+      <h2>Your Trip, {{ user.FirstName }} {{ user.LastName }} </h2>
+    </div>
+
+    <!-- Traveler Box -->
+    <div class="traveler-box">
+      <h3>Traveler(s):</h3>
+      <ul>
+        <!-- then other passengers -->
+        {% for p in passengers %}
+          <li>{{ p.FirstName }} {{ p.LastName }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Flight details -->
+    <div class="flight-details">
+      <h4>Flight Information</h4>
+      <p><strong>Flight Date:</strong> {{ flightDate }} </p>
+      <p><strong>Departure Time:</strong> {{ departureTime }} | <strong>Arrival Time:</strong> {{ arrivalTime }}</p>
+      <p><strong>Route:</strong> {{ fromCountry }} → {{ toCountry }}</p>
+      <p><strong>Class:</strong> Economy (A) <!-- or from your BigDict if you store class -->
+      </p>
+    </div>
+
+    <div class="ticket-ids">
+        <h4>Ticket details</h4>
+        {% for p, t_id in passenger_tickets %}
+            <p><strong>{{ p.FirstName }} {{ p.LastName }}</strong> — Ticket ID: <strong>{{ t_id }}</strong></p>
+        {% endfor %}
+      </div>
+
+    <!-- Price info -->
+    <div class="price-info">
+      <h4>Total Price</h4>
+      <p>USD {{ flightPrice }}</p>
+    </div>
+
+    <!-- Footer note -->
+    <div class="footer-note">
+      Baggage: 1PC per person . <br>
+      <h3> Our travel agency wishes you a pleasant trip!  </h3> <p>&#128151; &#128151; &#128151;</p>
+    </div>
+
+    <div class="brand-footer">
+      <h2>Safety First</h2>
+    </div>
+  </div>
+
+  
+
+</body>
+    {% include 'all_rights.html' %}
+</html>
