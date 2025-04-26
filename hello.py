@@ -282,7 +282,15 @@ def home():
         }
         flights.append(flight)
     
-    return render_template('index.html', user=current_user, flight1=flights[0], flight2=flights[1], flight3=flights[2], flight4=flights[3], today=date.today())
+    return render_template(
+        'index.html', 
+        user=current_user, 
+        flight1=flights[0] if len(flights) > 0 else None, 
+        flight2=flights[1] if len(flights) > 1 else None, 
+        flight3=flights[2] if len(flights) > 2 else None, 
+        flight4=flights[3] if len(flights) > 3 else None, 
+        today=date.today()
+    )
 
 #*********************************************************TALEED********************************************************
 
@@ -1986,7 +1994,6 @@ def average_time():
                 hh_mm_ss = str(result7[0])
                 hh, mm, _ = hh_mm_ss.split(":")
                 result7 = f"{int(hh)} hours and {int(mm)} minutes"
-                print(result7)
             else:
                 result7 = 'Invalid'
 
@@ -2314,7 +2321,6 @@ def process_payment():
     payment_time = now.time()
     payment_method = cardType
     amount = flightPrice
-    print(flightPrice)
 
     query_max = "SELECT MAX(booking_id) FROM Booking"
     myCursor.execute(query_max)
@@ -2337,7 +2343,6 @@ def process_payment():
             payment_date, payment_time, payment_method, amount,
             cardType, cardNumber, month, year, cvv, cardholderName
         ]
-        print(data)
         myCursor.execute(query, data)
         myDB.commit()
     else:
@@ -2365,7 +2370,6 @@ def process_payment():
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,  %s, %s, %s);
         """
-        print(retflightid)
         data = (
             booking_id, current_user.id, retflightid,
             payment_date, payment_time, payment_method, amount/2,
@@ -2491,7 +2495,6 @@ def myReservations():
     except pymysql.MySQLError as e:
         # Handle database errors gracefully
         flash('An error occurred while fetching reservations. Please try again later.', 'error')
-        print(f"Database Error: {e}")
         return redirect(url_for('index'))
     
     # Initialize lists to categorize reservations
